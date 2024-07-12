@@ -58,17 +58,19 @@ class TanqueGeneralSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         tanque_general = TanqueGeneral.objects.create(
             capacidad=validated_data['capacidad'],
-            cantidad=validated_data['cantidad'],
+            cantidad_actual=validated_data['cantidad_actual'],
             combustible=validated_data['combustible'],
-            surtidor=validated_data['surtidor']
+            surtidor=validated_data['surtidor'],
+            precio=validated_data['precio']
         )
         headers = {
             'content-type': 'application/json',
             'Authorization': self.context['request'].headers['Authorization']
         }
+
         try:
             create_tanque_general = requests.post(
-                Constants.REFINERIA_URL + '/solicitudes/',
+                Constants.REFINERIA_URL + 'solicitudes/',
                 headers=headers,
                 json={
                     "surtidor": tanque_general.surtidor.id,

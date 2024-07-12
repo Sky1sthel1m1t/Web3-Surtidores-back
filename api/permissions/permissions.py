@@ -26,3 +26,20 @@ class IsAdministradorAccesos(BasePermission):
         token = request.auth
         role_id = token['role']
         return role_id == 3
+
+
+class IsAdministradorRefineria(BasePermission):
+    message = 'No tienes permisos para hacer esto'
+
+    def has_permission(self, request, view):
+        token = request.auth
+        role_id = token['role']
+        return role_id == 2
+
+class IsChofer(BasePermission):
+    message = 'No tienes permisos para hacer esto'
+
+    def has_permission(self, request, view):
+        token = request.auth
+        role_id = token['role']
+        return role_id == 5
